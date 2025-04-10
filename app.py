@@ -16,7 +16,7 @@ app.layout = html.Div([
         style = {"width":"500px"}
     ),   
     dcc.Graph(id='graph'), 
-    html.Label("Con datos de ENOE(INEGI). Registros con sueldos declarados", style = {"color": "white"})
+    html.Label("Con datos de ENOE(INEGI). Registros con sueldos declarados", style = {"color": "black"})
 ])
 
 @app.callback(
