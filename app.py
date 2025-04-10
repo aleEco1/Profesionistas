@@ -16,11 +16,13 @@ app.layout = html.Div([
         style = {"width":"500px"}
     ),   
     dcc.Graph(id='graph'), 
+    dcc.Graph(id='bar-graph'), 
     html.Label("Con datos de ENOE(INEGI). Registros con sueldos declarados", style = {"color": "black"})
 ])
 
-@app.callback(
+@app.callback([
     Output('graph', 'figure'),
+    Output('bar-graph', 'figure')],
     Input('dropdown', 'value')
 )
 def update_graph(selected_country):
@@ -59,6 +61,19 @@ def update_graph(selected_country):
             text=["Guanajuato"]*len(df_gto),
         ).data[0]
     )
+
+    bar_fig = px.bar(
+    filtered_df,
+    x="Descripción_Campo_amplio",  # Profesiones
+    y="Sueldo promedio por profesionista",  # Sueldo promedio por profesionista
+    color="Descripción_Campo_amplio",  # Colores por profesión
+    title=f"Profesiones y Sueldo Promedio en {selected_year}",
+    labels={"Descripción_Campo_amplio": "Profesión", "Sueldo promedio por profesionista": "Sueldo Promedio"},
+    template="simple_white",
+    height=500,
+    width=900
+    )
+    bar_fig.update_xaxes(tickangle=45)
 
     # Añadir flechas (anotaciones)
 
