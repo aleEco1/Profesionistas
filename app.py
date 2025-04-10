@@ -17,6 +17,9 @@ app.layout = html.Div([
         style = {"width":"500px"}
     ),  
 
+    dcc.Graph(id='scatter_graph'), 
+
+
     dcc.Dropdown(
         id='year-dropdown',
         options=[{'label': str(year), 'value': year} for year in sorted(df['Año'].unique())],
@@ -24,23 +27,24 @@ app.layout = html.Div([
         style = {"width":"500px"}
     ),  
 
-    dcc.Graph(id='graph'), 
-    dcc.Graph(id='bar-graph'), 
+    
+    dcc.Graph(id='bar_graph'), 
     html.Label("Con datos de ENOE(INEGI). Registros con sueldos declarados", style = {"color": "black"})
 ])
 
 @app.callback(
-    [Output('scatter-graph', 'figure'),
-     Output('bar-graph', 'figure')],
+    [Output('scatter_graph', 'figure'),
+     Output('bar_graph', 'figure')],
     [Input('dropdown', 'value'),
      Input('year-dropdown', 'value')]
 )
+
 def update_graph(selected_career, selected_year):
     # Filtro general
     filtered_df = df[df['Descripción_Campo_amplio'] == selected_career]
     
     # Figura principal
-    ffig = px.scatter(
+    scatter_graph= px.scatter(
         filtered_df,
         x="Año",
         y="Sueldo promedio por profesionista",
@@ -52,7 +56,8 @@ def update_graph(selected_career, selected_year):
         width=900,
         labels={"DESCRIP":"Estado", "fac_tri":"Profesionistas"}
     )
-    ffig.update_xaxes(type="category")
+
+    scatter_graph.update_xaxes(type="category")
 
     # Datos de Guanajuato para el mismo campo
     df_gto = df[
@@ -61,7 +66,7 @@ def update_graph(selected_career, selected_year):
     ]
 
     # Añadir traza secundaria (puntos + flecha)
-    ffig.add_trace(
+    scatter_graph.add_trace(
         px.scatter(
             df_gto,
             x="Año",
@@ -73,7 +78,7 @@ def update_graph(selected_career, selected_year):
     )
 
     bar_data = filtered_df[filtered_df['Año'] == selected_year]
-    bar_fig = px.bar(
+    bar_graph = px.bar(
         bar_data,
         x="DESCRIP",  # Estados
         y="Sueldo promedio por profesionista",  # Sueldo promedio
@@ -84,12 +89,12 @@ def update_graph(selected_career, selected_year):
         height=500,
         width=900
     )
-    bar_fig.update_xaxes(tickangle=45)
+    bar_graph.update_xaxes(tickangle=45)
 
     # Añadir flechas (anotaciones)
 
     
-    return ffig,bar_fig
+    return scatter_graph,bar_graph
 
 
 if __name__ == '__main__':
