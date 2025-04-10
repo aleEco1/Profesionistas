@@ -1,0 +1,11 @@
+services:
+  - name: my-app
+    type: web
+    env: node
+    buildCommand: 'npm install'
+    startCommand: 'npm start'
+    envVars:
+      - key: MY_ENV_VAR
+        value: 'production'
+    plan: starter
+    region: oregon
