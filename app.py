@@ -8,7 +8,7 @@ df = pd.read_csv("https://raw.githubusercontent.com/aleEco1/aplicacion/main/dato
 
 app.layout = html.Div([
     html.H1('Sueldo promedio por profesionista por estado (con licenciatura entre 20 y 30 años)', style={'textAlign': 'center', 'color': "black", 'font-size': 45}),
-    html.P('(Información de sueldos y profesionistas considerando unicamente aquellos que declararon un ingreso)', style={'textAlign':'center', 'color': 'black'}),
+    html.P('(Información de sueldos y profesionistas considerando unicamente aquellos que declararon un ingreso)', style={'textAlign':'center', 'color': 'black','font-size':25}),
 
     dcc.Dropdown(
         id='dropdown',
@@ -18,6 +18,7 @@ app.layout = html.Div([
     ),  
 
     dcc.Graph(id='scatter_graph'), 
+    html.Label("Proporción por número de profesionistas en cada estado", style = {"color": "black"}),
 
 
     dcc.Dropdown(
@@ -60,7 +61,7 @@ def update_graph(selected_career, selected_year):
     scatter_graph.update_xaxes(type="category")
 
     scatter_graph.update_layout(
-        title=f'Sueldo promedio por profesionista en {selected_career}\nProporción por número de profesionistas en cada estado',
+        title=f'Sueldo promedio por profesionista en {selected_career}',
         title_x=0.5)  # Centrado del título
 
 
@@ -97,7 +98,7 @@ def update_graph(selected_career, selected_year):
     bar_graph.update_xaxes(tickangle=45)
 
     bar_graph.update_layout(
-        title=f'Sueldo promedio por profesionista en el año {selected_year}\nProporción por número de profesionistas en cada estado',
+        title=f'Sueldo promedio por profesionista en el año {selected_year}',
         title_x=0.5,
         xaxis = dict(tickangle = 90)) 
 
