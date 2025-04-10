@@ -7,8 +7,8 @@ server = app.server
 df = pd.read_csv("https://raw.githubusercontent.com/aleEco1/aplicacion/main/datos.csv")
 
 app.layout = html.Div([
-    html.H1('Sueldo promedio por profesionista en México (con licenciatura entre 20 y 30 años)', style={'textAlign': 'center', 'color': "blue", 'font-size': 30}),
-    html.P('Proporción por número de profesionistas en cada estado', style={'textAlign':'center', 'color': 'black'}),
+    html.H1('Sueldo promedio por profesionista por estado (con licenciatura entre 20 y 30 años)', style={'textAlign': 'center', 'color': "black", 'font-size': 45}),
+    html.P('(Información de sueldos y profesionistas considerando unicamente aquellos que declararon un ingreso)', style={'textAlign':'center', 'color': 'black'}),
 
     dcc.Dropdown(
         id='dropdown',
@@ -59,6 +59,11 @@ def update_graph(selected_career, selected_year):
 
     scatter_graph.update_xaxes(type="category")
 
+    scatter_graph.update_layout(
+        title=f'Sueldo promedio por profesionista en {selected_career}\nProporción por número de profesionistas en cada estado',
+        title_x=0.5)  # Centrado del título
+
+
     # Datos de Guanajuato para el mismo campo
     df_gto = df[
         (df["DESCRIP"] == "Guanajuato") &
@@ -90,6 +95,11 @@ def update_graph(selected_career, selected_year):
         width=900
     )
     bar_graph.update_xaxes(tickangle=45)
+
+    bar_graph.update_layout(
+        title=f'Sueldo promedio por profesionista en el año {selected_year}\nProporción por número de profesionistas en cada estado',
+        title_x=0.5,
+        xaxis = dict(tickangle = 90)) 
 
     # Añadir flechas (anotaciones)
 
