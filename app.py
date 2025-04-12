@@ -27,13 +27,10 @@ app.layout = html.Div([
             value=df['Año'].min(),  # Valor inicial como el primer año
             style = {"width":"500px"}
         ), 
-        html.Br(),
-        html.Br(),
-        html.Br(), 
         dcc.Graph(id='bar_graph'), 
         html.Label("Con datos de ENOE(INEGI). Registros con sueldos declarados", style = {"color": "black"})
         ])
-    ],style={"display":"flex"})
+    ],style={"display":"flex", "gap": "80px"})
 ])
 
 @app.callback(
@@ -50,7 +47,7 @@ def update_graph(selected_career, selected_year):
     # Figura principal
     scatter_graph= px.scatter(
         filtered_df,
-        x="fac_tri",
+        x="Año",
         y="Sueldo promedio por profesionista",
         color="DESCRIP",
         size="fac_tri",
