@@ -26,7 +26,10 @@ app.layout = html.Div([
             options=[{'label': str(year), 'value': year} for year in sorted(df['Año'].unique())],
             value=df['Año'].min(),  # Valor inicial como el primer año
             style = {"width":"500px"}
-        ),  
+        ), 
+        html.Br(),
+        html.Br(),
+        html.br(), 
         dcc.Graph(id='bar_graph'), 
         html.Label("Con datos de ENOE(INEGI). Registros con sueldos declarados", style = {"color": "black"})
         ])
