@@ -29,7 +29,7 @@ app.layout = html.Div([
         ), 
         html.Br(),
         html.Br(),
-        html.br(), 
+        html.Br(), 
         dcc.Graph(id='bar_graph'), 
         html.Label("Con datos de ENOE(INEGI). Registros con sueldos declarados", style = {"color": "black"})
         ])
