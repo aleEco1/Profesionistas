@@ -8,29 +8,29 @@ df = pd.read_csv("https://raw.githubusercontent.com/aleEco1/aplicacion/main/dato
 
 app.layout = html.Div([
     html.H1('Sueldo promedio por profesionista por estado (con licenciatura entre 20 y 30 años)', style={'textAlign': 'center', 'color': "black", 'font-size': 45}),
-    html.P('(Información de sueldos y profesionistas considerando unicamente aquellos que declararon un ingreso)', style={'textAlign':'center', 'color': 'black','font-size':25}),
+    html.P('(Información de sueldos y profesionistas considerando unicamente aquellos que declararon un ingreso)', style={'textAlign':'center', 'color': 'black','font-size':25}),  
+    html.Div([
+        html.Div([
+        dcc.Dropdown(
+            id='dropdown',
+            options=[{'label': c, 'value': c} for c in df['Descripción_Campo_amplio'].unique()],
+            value='Administración y negocios', 
+            style = {"width":"500px"}
+        ),
+        dcc.Graph(id='scatter_graph'), 
+        html.Label("Proporción por número de profesionistas en cada estado", style = {"color": "black"})]),
 
-    dcc.Dropdown(
-        id='dropdown',
-        options=[{'label': c, 'value': c} for c in df['Descripción_Campo_amplio'].unique()],
-        value='Administración y negocios', 
-        style = {"width":"500px"}
-    ),  
-
-    dcc.Graph(id='scatter_graph'), 
-    html.Label("Proporción por número de profesionistas en cada estado", style = {"color": "black"}),
-
-
-    dcc.Dropdown(
-        id='year-dropdown',
-        options=[{'label': str(year), 'value': year} for year in sorted(df['Año'].unique())],
-        value=df['Año'].min(),  # Valor inicial como el primer año
-        style = {"width":"500px"}
-    ),  
-
-    
-    dcc.Graph(id='bar_graph'), 
-    html.Label("Con datos de ENOE(INEGI). Registros con sueldos declarados", style = {"color": "black"})
+        htm.Div([
+        dcc.Dropdown(
+            id='year-dropdown',
+            options=[{'label': str(year), 'value': year} for year in sorted(df['Año'].unique())],
+            value=df['Año'].min(),  # Valor inicial como el primer año
+            style = {"width":"500px"}
+        ),  
+        dcc.Graph(id='bar_graph'), 
+        html.Label("Con datos de ENOE(INEGI). Registros con sueldos declarados", style = {"color": "black"})
+        ])
+    ],style={"display":"flex"})
 ])
 
 @app.callback(
@@ -47,7 +47,7 @@ def update_graph(selected_career, selected_year):
     # Figura principal
     scatter_graph= px.scatter(
         filtered_df,
-        x="Año",
+        x="fac_tri",
         y="Sueldo promedio por profesionista",
         color="DESCRIP",
         size="fac_tri",
