@@ -20,7 +20,7 @@ app.layout = html.Div([
         dcc.Graph(id='scatter_graph'), 
         html.Label("Proporción por número de profesionistas en cada estado", style = {"color": "black"})]),
 
-        htm.Div([
+        html.Div([
         dcc.Dropdown(
             id='year-dropdown',
             options=[{'label': str(year), 'value': year} for year in sorted(df['Año'].unique())],
